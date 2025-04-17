@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Financial News Aggregator</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" type="text/css" href="/2_static/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h1>Stock News Lookup</h1>
@@ -10,8 +11,23 @@
     <form action="/stock" method="get">
         <label for="ticker">Enter Stock Ticker:</label>
         <input type="text" id="ticker" name="ticker" required>
+
+        <label for="range">Select Range:</label>
+        <select id="range" name="range">
+            <option value="1d">1 Day</option>
+            <option value="5d">5 Days</option>
+            <option value="1mo" selected>1 Month</option>
+            <option value="6mo">6 Months</option>
+            <option value="1y">1 Year</option>
+            <option value="5y">5 Years</option>
+        </select>
+
         <button type="submit">Search</button>
     </form>
+
+    {% if ticker and range %}
+        <h3>Showing data for {{ ticker }} over the last {{ range }}</h3>
+    {% endif %}
 
     {% if stock_data %}
         <h2>Stock Info for {{ ticker }}</h2>
@@ -54,7 +70,6 @@
     {% if plot %}
         <h2>Interactive Stock Chart</h2>
         <div id="plot"></div>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <script>
             var plotData = {{ plot | safe }};
             Plotly.newPlot('plot', plotData.data, plotData.layout);

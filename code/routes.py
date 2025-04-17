@@ -6,12 +6,14 @@ api_bp = Blueprint('api', __name__)
 @api_bp.route('/stock', methods=['GET'])
 def stock_info():
     ticker = request.args.get('ticker', '').upper()
+    range_period = request.args.get('range', '1mo')  # Default to 1 month
+
     if not ticker:
         return render_template('index.html', stock_data=None, news=None, plot=None)
 
     # Get stock data
-    stock_data = get_stock_data(ticker).tail(1)
-    stock_data_json = stock_data.reset_index().to_dict(orient='records')
+    stock_data = get_stock_data(ticker, period=range_period)
+    stock_data_latest = stock_data.tail(1).reset_index().to_dict(orient='records')
 
     # Get news articles
     news_response = get_news(ticker)
@@ -21,11 +23,12 @@ def stock_info():
     for article in articles:
         article['sentiment'] = analyze_sentiment(article['title'])
 
-    # Get interactive plot
-    plot = generate_stock_plot(get_stock_data(ticker))
+    # Generate interactive plot
+    plot = generate_stock_plot(stock_data)
 
     return render_template('index.html',
                            ticker=ticker,
-                           stock_data=stock_data_json,
+                           range=range_period,
+                           stock_data=stock_data_latest,
                            news=articles,
                            plot=plot)

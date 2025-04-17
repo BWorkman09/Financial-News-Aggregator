@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+form {
+    margin-bottom: 2rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    padding: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+table {
+    border-collapse: collapse;
+    width: 60%;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #ecf0f1;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 1rem;
+    background: #fff;
+    padding: 12px;
+    border-left: 5px solid #ccc;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+li span {
+    font-weight: bold;
+}
+
+/* Optional: Sentiment-specific border colors */
+li span:contains("Positive") {
+    color: green;
+}
+
+li span:contains("Negative") {
+    color: red;
+}
+
+li span:contains("Neutral") {
+    color: gray;
+}
