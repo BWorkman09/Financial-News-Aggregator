@@ -1,41 +1,64 @@
-from flask import Flask, render_template
-from routes import api_bp
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial News Aggregator</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <h1>Stock News Lookup</h1>
 
-app = Flask(__name__)
-app.register_blueprint(api_bp)
+    <form action="/stock" method="get">
+        <label for="ticker">Enter Stock Ticker:</label>
+        <input type="text" id="ticker" name="ticker" required>
+        <button type="submit">Search</button>
+    </form>
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Financial News Aggregator</title>
-    </head>
-    <body>
-        <h1>Stock News Lookup</h1>
-        <form action="/stock" method="get">
-            <label for="ticker">Enter Stock Ticker:</label>
-            <input type="text" id="ticker" name="ticker" required>
-            <button type="submit">Search</button>
-        </form>
-    
-        {% if stock_data %}
-            <h2>Stock Info for {{ ticker }}</h2>
-            <pre>{{ stock_data }}</pre>
-    
-            <h2>News Articles</h2>
-            <ul>
-                {% for article in news %}
-                    <li><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></li>
+    {% if stock_data %}
+        <h2>Stock Info for {{ ticker }}</h2>
+        <table>
+            <tr>
+                {% for key in stock_data[0].keys() %}
+                <th>{{ key }}</th>
                 {% endfor %}
-            </ul>
-        {% endif %}
-    </body>
-    </html>
-       
+            </tr>
+            <tr>
+                {% for value in stock_data[0].values() %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    {% endif %}
+
+    {% if news %}
+        <h2>News Articles</h2>
+        <ul>
+            {% for article in news %}
+                <li>
+                    <a href="{{ article.url }}" target="_blank">{{ article.title }}</a><br>
+                    <small>{{ article.publishedAt }} — {{ article.source.name }}</small><br>
+                    <strong>Sentiment:</strong>
+                    <span style="
+                        color:
+                            {% if article.sentiment == 'Positive' %}green
+                            {% elif article.sentiment == 'Negative' %}red
+                            {% else %}gray
+                            {% endif %}
+                        ;">
+                        {{ article.sentiment }}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if plot %}
+        <h2>Interactive Stock Chart</h2>
+        <div id="plot"></div>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script>
+            var plotData = {{ plot | safe }};
+            Plotly.newPlot('plot', plotData.data, plotData.layout);
+        </script>
+    {% endif %}
+</body>
+</html>
