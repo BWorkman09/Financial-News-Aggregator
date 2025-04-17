@@ -1,0 +1,41 @@
+from flask import Flask, render_template
+from routes import api_bp
+
+app = Flask(__name__)
+app.register_blueprint(api_bp)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Financial News Aggregator</title>
+    </head>
+    <body>
+        <h1>Stock News Lookup</h1>
+        <form action="/stock" method="get">
+            <label for="ticker">Enter Stock Ticker:</label>
+            <input type="text" id="ticker" name="ticker" required>
+            <button type="submit">Search</button>
+        </form>
+    
+        {% if stock_data %}
+            <h2>Stock Info for {{ ticker }}</h2>
+            <pre>{{ stock_data }}</pre>
+    
+            <h2>News Articles</h2>
+            <ul>
+                {% for article in news %}
+                    <li><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </body>
+    </html>
+       

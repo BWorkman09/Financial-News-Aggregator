@@ -8,8 +8,9 @@ def get_stock_data(ticker):
     hist = stock.history(period="5d")
     return hist
 
-def get_news(ticker, api_key):
-    url = f"https://newsapi.org/v2/everything?q={ticker}&apiKey={api_key}"
+def get_news(ticker):
+    api_key = "410127e2b9e944089571482ea6d5c0eb"
+    url = f"https://newsapi.org/v2/everything?q={ticker}&sortBy=publishedAt&apiKey={api_key}"
     response = requests.get(url)
     return response.json()
 
