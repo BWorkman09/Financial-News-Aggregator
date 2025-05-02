@@ -1,6 +1,7 @@
 from flask import Flask
 from routes import api_bp
 import os
+from flask import render_template
 
 # Set custom folder locations
 app = Flask(
@@ -13,7 +14,14 @@ app.register_blueprint(api_bp)
 
 @app.route('/')
 def home():
-    return app.send_static_file('index.html')  # Optional if you want to serve it directly
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+#python code/run.py
+#http://127.0.0.1:5000/

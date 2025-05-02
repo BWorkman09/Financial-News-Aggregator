@@ -28,8 +28,29 @@ def analyze_sentiment(text):
         return "Neutral"
 
 def generate_stock_plot(hist_df):
-    fig = go.Figure(data=[
-        go.Scatter(x=hist_df.index, y=hist_df['Close'], mode='lines', name='Close')
-    ])
-    fig.update_layout(title="Stock Price Over Time", xaxis_title="Date", yaxis_title="Close Price")
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=hist_df.index,
+        y=hist_df['Close'],
+        mode='lines+markers',
+        line=dict(color='#3182ce', width=2),
+        marker=dict(size=5, color='#3182ce'),
+        hovertemplate='<b>Date</b>: %{x|%b %d, %Y}<br><b>Close</b>: $%{y:.2f}<extra></extra>',
+        name='Close Price'
+    ))
+
+    fig.update_layout(
+        title='Stock Price Over Time',
+        xaxis_title='Date',
+        yaxis_title='Close Price (USD)',
+        template='plotly_white',
+        hovermode='x unified',
+        margin=dict(l=40, r=30, t=60, b=40),
+        height=450,
+        font=dict(family='Segoe UI, sans-serif', size=14),
+    )
+
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+

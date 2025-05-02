@@ -53,13 +53,10 @@
                     <a href="{{ article.url }}" target="_blank">{{ article.title }}</a><br>
                     <small>{{ article.publishedAt }} — {{ article.source.name }}</small><br>
                     <strong>Sentiment:</strong>
-                    <span style="
-                        color:
-                            {% if article.sentiment == 'Positive' %}green
-                            {% elif article.sentiment == 'Negative' %}red
-                            {% else %}gray
-                            {% endif %}
-                        ;">
+                    <span class="{% if article.sentiment == 'Positive' %}positive
+                                 {% elif article.sentiment == 'Negative' %}negative
+                                 {% else %}neutral
+                                 {% endif %}">
                         {{ article.sentiment }}
                     </span>
                 </li>

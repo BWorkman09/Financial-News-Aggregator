@@ -1,86 +1,105 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 2rem;
-    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    background-color: #f9fafb;
     color: #333;
 }
 
-h1, h2 {
-    color: #2c3e50;
+h1 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+}
+
+h2, h3 {
+    color: #2c5282;
+    margin-top: 2rem;
 }
 
 form {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
 }
 
 label {
-    font-weight: bold;
+    margin-right: 0.5rem;
+    font-weight: 500;
 }
 
-input[type="text"] {
-    padding: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
+input[type="text"],
+select {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
     border-radius: 4px;
+    margin-right: 1rem;
+    font-size: 1rem;
 }
 
 button {
-    padding: 8px 12px;
-    background-color: #3498db;
-    color: white;
+    background-color: #3182ce;
+    color: #fff;
     border: none;
+    padding: 0.6rem 1.2rem;
     border-radius: 4px;
+    font-size: 1rem;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #2b6cb0;
 }
 
 table {
+    width: 100%;
     border-collapse: collapse;
-    width: 60%;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 th {
-    background-color: #ecf0f1;
+    background-color: #edf2f7;
+    color: #2d3748;
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 li {
-    margin-bottom: 1rem;
     background: #fff;
-    padding: 12px;
-    border-left: 5px solid #ccc;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #cbd5e0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
 }
 
 li span {
     font-weight: bold;
+    padding-left: 0.5rem;
 }
 
-/* Optional: Sentiment-specific border colors */
-li span:contains("Positive") {
-    color: green;
+.positive {
+    color: #38a169;
 }
 
-li span:contains("Negative") {
-    color: red;
+.negative {
+    color: #e53e3e;
 }
 
-li span:contains("Neutral") {
-    color: gray;
+.neutral {
+    color: #718096;
 }
