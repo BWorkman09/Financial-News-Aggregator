@@ -11,24 +11,37 @@ def stock_info():
     if not ticker:
         return render_template('index.html', stock_data=None, news=None, plot=None)
 
-    # Get stock data
-    stock_data = get_stock_data(ticker, period=range_period)
-    stock_data_latest = stock_data.tail(1).reset_index().to_dict(orient='records')
+    try:
+        # Get stock data
+        stock_data = get_stock_data(ticker, period=range_period)
 
-    # Get news articles
-    news_response = get_news(ticker)
-    articles = news_response.get("articles", [])[:5]
+        if stock_data.empty or stock_data['Close'].max() == 0:
+            raise ValueError("No valid stock data found for this ticker.")
 
-    # Add sentiment analysis
-    for article in articles:
-        article['sentiment'] = analyze_sentiment(article['title'])
+        stock_data_latest = stock_data.tail(1).reset_index().to_dict(orient='records')
 
-    # Generate interactive plot
-    plot = generate_stock_plot(stock_data)
+        # Get news articles
+        news_response = get_news(ticker)
+        articles = news_response.get("articles", [])[:5]
 
-    return render_template('index.html',
-                           ticker=ticker,
-                           range=range_period,
-                           stock_data=stock_data_latest,
-                           news=articles,
-                           plot=plot)
+        # Add sentiment analysis
+        for article in articles:
+            article['sentiment'] = analyze_sentiment(article['title'])
+
+        # Generate interactive plot
+        plot = generate_stock_plot(stock_data)
+
+        return render_template('index.html',
+                               ticker=ticker,
+                               range=range_period,
+                               stock_data=stock_data_latest,
+                               news=articles,
+                               plot=plot)
+
+    except Exception as e:
+        return render_template('index.html',
+                               ticker=ticker,
+                               stock_data=None,
+                               news=None,
+                               plot=None,
+                               error=str(e))
